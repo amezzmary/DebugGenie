@@ -1,0 +1,31 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# API keys and secrets
+.env
+.env.*
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Generated reports
+reports/
+
+# Compiled C/C++ executables
+*.exe
+*.o
+*.obj
+
+# Log files
+*.log
+
+# IDE settings
+.vscode/

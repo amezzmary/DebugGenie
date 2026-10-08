@@ -1,0 +1,407 @@
+st.markdown("""
+<style>
+
+/* ==============================
+   DEBUGGENIE LIGHT BLUE THEME
+   ============================== */
+
+.stApp {
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(125, 211, 252, 0.35),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(147, 197, 253, 0.30),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            #f0f9ff 0%,
+            #e0f2fe 50%,
+            #eff6ff 100%
+        );
+
+    color: #172554;
+}
+
+
+/* ==============================
+   MAIN CONTENT
+   ============================== */
+
+.block-container {
+    max-width: 1200px;
+    padding-top: 1.5rem;
+    padding-bottom: 3rem;
+}
+
+
+/* ==============================
+   BRAND
+   ============================== */
+
+.dg-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 15px 22px;
+    margin-bottom: 20px;
+
+    border-radius: 18px;
+
+    background: rgba(150, 3, 161, 0.92);
+
+    border: 1px solid #bae6fd;
+
+    box-shadow:
+        0 8px 25px rgba(14,116,144,0.10);
+}
+
+.dg-brand-name {
+    font-size: 29px;
+    font-weight: 850;
+    color: #0369a1;
+}
+
+.dg-brand-sub {
+    color: #64748b;
+    font-size: 13px;
+}
+
+
+/* ==============================
+   HERO
+   ============================== */
+
+.dg-hero {
+    text-align: center;
+
+    padding: 55px 25px 45px;
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.97),
+            rgba(224,242,254,0.96)
+        );
+
+    border: 1px solid #bae6fd;
+
+    box-shadow:
+        0 15px 45px rgba(14,116,144,0.12);
+
+    margin-bottom: 30px;
+}
+
+
+.dg-badge {
+    display: inline-block;
+
+    padding: 9px 18px;
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #e0f2fe,
+            #dbeafe
+        );
+
+    color: #0369a1;
+
+    font-size: 13px;
+
+    font-weight: 800;
+}
+
+
+.dg-hero-title {
+    font-size: clamp(35px, 5vw, 58px);
+
+    line-height: 1.08;
+
+    font-weight: 900;
+
+    margin: 22px 0 14px;
+
+    color: #172554;
+}
+
+
+.dg-gradient-text {
+    background:
+        linear-gradient(
+            90deg,
+            #0284c7,
+            #2563eb,
+            #4f46e5
+        );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+
+
+.dg-hero-text {
+    font-size: 18px;
+
+    color: #64748b;
+}
+
+
+/* ==============================
+   CARDS
+   ============================== */
+
+div[data-testid="stVerticalBlockBorderWrapper"] {
+
+    border: 1px solid #bae6fd !important;
+
+    border-radius: 20px !important;
+
+    background: rgba(255,255,255,0.94) !important;
+
+    box-shadow:
+        0 8px 24px rgba(14,116,144,0.08);
+}
+
+
+/* ==============================
+   BUTTONS
+   ============================== */
+
+.stButton > button {
+
+    border-radius: 12px !important;
+
+    border: 1px solid #93c5fd !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #eff6ff
+        ) !important;
+
+    color: #0369a1 !important;
+
+    font-weight: 700 !important;
+
+    min-height: 44px;
+
+    transition: all .2s ease;
+}
+
+
+.stButton > button:hover {
+
+    border-color: #0284c7 !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e0f2fe,
+            #dbeafe
+        ) !important;
+
+    color: #075985 !important;
+
+    transform: translateY(-1px);
+}
+
+
+/* Primary button */
+
+.stButton > button[kind="primary"] {
+
+    background:
+        linear-gradient(
+            90deg,
+            #0284c7,
+            #2563eb
+        ) !important;
+
+    color: white !important;
+
+    border: none !important;
+
+    box-shadow:
+        0 7px 18px rgba(37,99,235,0.25);
+}
+
+
+.stButton > button[kind="primary"]:hover {
+
+    background:
+        linear-gradient(
+            90deg,
+            #0369a1,
+            #1d4ed8
+        ) !important;
+}
+
+
+/* ==============================
+   METRIC CARDS
+   ============================== */
+
+div[data-testid="stMetric"] {
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f0f9ff
+        );
+
+    border: 1px solid #bae6fd;
+
+    border-radius: 18px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 8px 22px rgba(14,116,144,.08);
+}
+
+
+div[data-testid="stMetricLabel"] {
+
+    color: #64748b !important;
+}
+
+
+div[data-testid="stMetricValue"] {
+
+    color: #0284c7 !important;
+}
+
+
+/* ==============================
+   INPUT BOXES
+   ============================== */
+
+.stTextInput input,
+.stTextArea textarea {
+
+    border-radius: 12px !important;
+
+    border: 1px solid #bae6fd !important;
+
+    background: #ffffff !important;
+}
+
+
+.stTextInput input:focus,
+.stTextArea textarea:focus {
+
+    border-color: #0284c7 !important;
+
+    box-shadow:
+        0 0 0 2px rgba(14,165,233,.15) !important;
+}
+
+
+/* ==============================
+   FILE UPLOADER
+   ============================== */
+
+div[data-testid="stFileUploader"] {
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f0f9ff
+        );
+
+    border: 1px dashed #38bdf8;
+
+    border-radius: 18px;
+
+    padding: 10px;
+}
+
+
+/* ==============================
+   EXPANDERS
+   ============================== */
+
+.streamlit-expanderHeader {
+
+    background: rgb(34, 86, 158) !important;
+
+    border-radius: 12px !important;
+
+    color: #2e3c43 !important;
+
+    font-weight: 700;
+}
+
+
+/* ==============================
+   ALERTS
+   ============================== */
+
+div[data-testid="stAlert"] {
+
+    border-radius: 14px;
+}
+
+
+/* ==============================
+   CODE
+   ============================== */
+
+pre {
+
+    border-radius: 14px !important;
+}
+
+
+/* ==============================
+   FOOTER
+   ============================== */
+
+.dg-footer {
+
+    text-align: center;
+
+    margin-top: 35px;
+
+    padding: 28px;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e0f2fe,
+            #eff6ff
+        );
+
+    border: 1px solid #bae6fd;
+
+    color: green;
+}
+
+
+.dg-footer-title {
+
+    color: #0369a1;
+
+    font-size: 19px;
+
+    font-weight: 800;
+}
+
+</style>
+""", unsafe_allow_html=True)
