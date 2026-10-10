@@ -695,17 +695,7 @@ def analyze_page():
     code = ""
 
     filename = "Pasted Code"
-    language = st.selectbox(
-    "Programming Language",
-    [
-        "Python",
-        "C",
-        "C++",
-        "Java",
-        "JavaScript"
-    ],
-    key="programming_language",
-    )
+    
 
     # --------------------------------------------------------
     # PASTE CODE
@@ -805,18 +795,33 @@ def analyze_page():
             "🔍 DebugGenie is checking your code..."
         ):
 
+            
             try:
+                if language == "Python":
+                    result = check_python_code(code)
 
-                result = check_python_code(
-                    code
-                )
+                elif language == "C":
+                    from backend.c_debugger import check_c_code
+                    result = check_c_code(code)
+
+                elif language == "C++":
+                    from backend.cpp_debugger import check_cpp_code
+                    result = check_cpp_code(code)
+
+                elif language == "Java":
+                    from backend.java_debugger import check_java_code
+                    result = check_java_code(code)
+
+                elif language == "JavaScript":
+                    from backend.javascript_debugger import check_javascript_code
+                    result = check_javascript_code(code)
+
+                else:
+                    st.error("Unsupported programming language.")
+                    return
 
             except Exception as ex:
-
-                st.error(
-                    f"Debugger error: {ex}"
-                )
-
+                st.error(f"Debugger error: {ex}")
                 return
 
         # ----------------------------------------------------
