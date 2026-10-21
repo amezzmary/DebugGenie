@@ -7,10 +7,51 @@ import streamlit.components.v1 as components
 # HOME
 # ============================================================
 
+from pathlib import Path
+import streamlit as st
+
+import streamlit as st
+
+
+import base64
+from pathlib import Path
+import streamlit as st
+
+
 def render_home_header():
-    st.markdown("## 🧞 DebugGenie")
+    # Adjust path if your image location differs
+    img_path = Path("assets/genie_lamp.png")
 
+    if img_path.exists():
+        encoded_img = base64.b64encode(img_path.read_bytes()).decode("utf-8")
 
+        st.markdown(
+            f"""
+            <div style="
+                display: flex; 
+                align-items: center; 
+                justify-content: center; 
+                gap: 12px; 
+                white-space: nowrap;
+                width: 100%;
+                margin-bottom: 30px;
+            ">
+                <img src="data:image/png;base64,{encoded_img}" style="height: 51px; width: auto; flex-shrink: 0;" />
+                <h1 style="
+                    margin: 0; 
+                    padding: 0; 
+                    font-size: 3.2rem; 
+                    font-weight: 700; 
+                    color: #1e1b4b; 
+                    line-height: 1;
+                    display: inline;
+                ">DebugGenie</h1>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    else:
+        st.error(f"Image not found at {img_path.resolve()}")
 def render_home_hero():
 
     components.html(
@@ -81,12 +122,12 @@ def render_home_hero():
     )
 
 def render_home_features():
-    st.markdown("## ✨ DebugGenie Features")
+    st.markdown("## ✨  Features")
 
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.markdown("### 🐍 Multi-Language")
+        st.markdown("###  Multi-Language")
         st.write(
             "Analyze your Python programs and "
             "identify common coding errors."

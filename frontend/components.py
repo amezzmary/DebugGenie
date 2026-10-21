@@ -22,102 +22,35 @@ def render_footer():
         unsafe_allow_html=True
     )
 
+import streamlit as st
 
-# ============================================================
-# FILE INFORMATION
-# ============================================================
+def render_file_information(filename, language="Python"):
+    st.markdown(f"**File:** `{filename}` | **Language:** `{language}`")
 
-def render_file_information(filename, language):
-    st.markdown("### 📄 File Information")
+def render_success_result(result=None):
+    st.success("🎉 Code compiled and executed successfully! No errors detected.")
 
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.write("**File:**")
-        st.write(filename if filename else "Pasted Code")
-
-    with col2:
-        st.write("**Language:**")
-        st.write(language)
-
-
-# ============================================================
-# SUCCESS RESULT
-# ============================================================
-
-def render_success_result(message):
-    st.success("✅ No Error Detected")
-
-    st.markdown("### Analysis Result")
-
-    st.info(
-        message if message else
-        "No syntax or undefined-variable errors were detected."
-    )
-
-
-# ============================================================
-# ERROR RESULT
-# ============================================================
-
-def render_error_result(
-    error_type,
-    line,
-    message,
-    code="",
-    suggestion=""
-):
-    st.error("❌ Error Detected")
-
-    st.markdown("### Error Details")
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.write("**Error Type**")
-        st.code(str(error_type))
-
-    with col2:
-        st.write("**Line**")
-        st.code(str(line))
-
-    st.write("**Error Message**")
-
-    st.error(
-        message if message else "An error was detected."
-    )
-
+def render_error_result(result=None, suggestion=""):
+    st.error("❌ Errors detected during execution/analysis.")
+    if isinstance(result, dict):
+        err_type = result.get("error_type", result.get("type", "Error"))
+        err_msg = result.get("error_message", result.get("message", "Unknown error"))
+        err_line = result.get("error_line", result.get("line", "N/A"))
+        
+        st.markdown(f"**Error Type:** `{err_type}`")
+        st.markdown(f"**Error Message:** `{err_msg}`")
+        st.markdown(f"**Line Number:** `{err_line}`")
+        
     if suggestion:
-        st.markdown("### 💡 Suggestion")
-        st.info(suggestion)
+        st.info(f"**Suggestion:** {suggestion}")
 
+def render_ai_analysis(ai_help=""):
+    st.subheader("🤖 AI Debugging Analysis")
+    st.write(ai_help)
 
-# ============================================================
-# AI ANALYSIS
-# ============================================================
-
-def render_ai_analysis(ai_help):
-    st.markdown("### 🤖 AI Debugging Analysis")
-
-    if ai_help:
-        st.markdown(ai_help)
-    else:
-        st.info(
-            "Gemini AI analysis is not available for this analysis."
-        )
-
-
-# ============================================================
-# SUBMITTED CODE
-# ============================================================
-
-def render_submitted_code(code):
-    st.markdown("### 💻 Submitted Code")
-
-    if code:
-        st.code(code, language="python")
-    else:
-        st.info("No code was submitted.")
+def render_submitted_code(code="", language="Python"):
+    st.subheader("📄 Submitted Code")
+    st.code(code, language=str(language).lower())
 
 
 # ============================================================

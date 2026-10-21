@@ -1,9 +1,10 @@
 import sqlite3
 import hashlib
 from datetime import datetime
+from pathlib import Path
 
-DB_NAME = "debuggenie.db"
-
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DB_NAME = PROJECT_ROOT / "debuggenie.db"
 
 # ============================================================
 # DATABASE CONNECTION
@@ -445,3 +446,63 @@ def get_all_history():
 # ============================================================
 
 init_database()
+
+import sqlite3
+from pathlib import Path
+
+
+# Uses the existing DebugGenie database file
+DB_PATH = Path(__file__).resolve().parent.parent / "debuggenie.db"
+
+
+def get_all_users():
+    """Return registered users without exposing password hashes."""
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+
+        users = conn.execute("""
+            SELECT id, name, email, role, created_at
+            FROM users
+            ORDER BY id
+        """).fetchall()
+
+        return [dict(user) for user in users]
+
+
+def delete_user_account(user_id, admin_id):
+    """Delete a user's history and account atomically."""
+
+    # Never allow the logged-in admin to delete their own account.
+    if int(user_id) == int(admin_id):
+        return False, "You cannot delete your own admin account."
+
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+
+        # Protect against deleting another admin account.
+        target = conn.execute(
+            "SELECT id, role FROM users WHERE id = ?",
+            (user_id,)
+        ).fetchone()
+
+        if target is None:
+            return False, "User not found."
+
+        if target["role"] == "admin":
+            return False, "Admin accounts cannot be deleted here."
+
+        with conn:
+            conn.execute(
+                "DELETE FROM analysis_history WHERE user_id = ?",
+                (user_id,)
+            )
+
+            cursor = conn.execute(
+                "DELETE FROM users WHERE id = ?",
+                (user_id,)
+            )
+
+            if cursor.rowcount != 1:
+                raise RuntimeError("User deletion failed.")
+
+    return True, "User and associated analysis history deleted."

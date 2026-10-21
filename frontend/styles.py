@@ -8,65 +8,56 @@ def load_styles():
 
         /* Main background */
         .stApp {
-            background: linear-gradient(
-                135deg,
-                #f8f7ff 0%,
-                #ffffff 50%,
-                #f3efff 100%
-            );
+            background-color: #F3E8FF !important;
         }
 
-        /* Main content */
-        .main {
-            padding-top: 1rem;
+        /* Target all Streamlit text & markdown containers */
+        [data-testid="stMarkdownContainer"] p,
+        [data-testid="stMarkdownContainer"] span,
+        [data-testid="stMarkdownContainer"] li,
+        label {
+            color: #2D064E !important; /* Deep Eggplant / Dark Purple */
         }
 
-        /* Buttons */
-        .stButton > button {
-            border-radius: 10px;
+        /* Headings - Distinct Purple Tones */
+        [data-testid="stMarkdownContainer"] h1 {
+            color: #3B0764 !important; /* Rich Dark Purple */
+            font-weight: 800 !important;
+        }
+
+        [data-testid="stMarkdownContainer"] h2,
+        [data-testid="stMarkdownContainer"] h3 {
+            color: #581C87 !important; /* Deep Royal Purple */
+            font-weight: 700 !important;
+        }
+
+        /* Muted / Subtitle text */
+        .muted-text {
+            color: #7E22CE !important;
             font-weight: 600;
-            border: none;
-            padding: 0.55rem 1.2rem;
-            transition: 0.2s;
+        }
+
+        /* Buttons styling */
+        .stButton > button {
+            background-color: #9333EA !important;
+            color: #FFFFFF !important;
+            border-radius: 10px !important;
+            border: none !important;
+            font-weight: 600 !important;
         }
 
         .stButton > button:hover {
-            transform: translateY(-1px);
+            background-color: #7E22CE !important;
+            color: #FFFFFF !important;
         }
 
-        /* Text inputs */
-        .stTextInput input,
-        .stTextArea textarea {
-            border-radius: 10px;
-        }
-
-        /* File uploader */
-        [data-testid="stFileUploader"] {
-            border-radius: 12px;
-        }
-
-        /* Cards */
-        .debug-card {
-            background: white;
-            padding: 25px;
-            border-radius: 18px;
-            box-shadow: 0 4px 18px rgba(80, 60, 120, 0.08);
-            margin-bottom: 20px;
-        }
-
-        /* Headings */
-        h1, h2, h3 {
-            font-weight: 700;
-        }
-
-        /* Sidebar */
+        /* Sidebar styling */
         section[data-testid="stSidebar"] {
-            background: #faf9ff;
+            background-color: #FAF9FF !important;
         }
 
-        /* Code area */
-        pre {
-            border-radius: 12px;
+        section[data-testid="stSidebar"] * {
+            color: #3B0764 !important;
         }
 
         </style>

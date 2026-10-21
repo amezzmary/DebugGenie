@@ -7,10 +7,11 @@ import tempfile
 
 
 def check_javascript_code(code):
-    """Check JavaScript syntax, including JavaScript transformer code."""
+    """Check JavaScript syntax using Node.js."""
 
     node_path = shutil.which("node")
 
+    # Fallback to the known Windows installation path.
     if not node_path:
         possible_path = r"D:\Program Files\nodejs\node.exe"
         if os.path.isfile(possible_path):
@@ -22,10 +23,21 @@ def check_javascript_code(code):
             "error_type": "RuntimeError",
             "error_line": None,
             "error_message": "Node.js was not found.",
-            "suggestion": "Install Node.js and make sure node.exe is accessible."
+            "suggestion": (
+                "Install Node.js and make sure node.exe is accessible."
+            )
         }
 
-    # Extract inline JavaScript from an HTML document.
+    if not isinstance(code, str) or not code.strip():
+        return {
+            "success": False,
+            "error_type": "InputError",
+            "error_line": None,
+            "error_message": "No JavaScript code was provided.",
+            "suggestion": "Enter or paste JavaScript code and try again."
+        }
+
+    # Extract inline JavaScript from HTML.
     if re.search(r"<!doctype\s+html|<html\b", code, re.I):
         scripts = re.findall(
             r"<script\b[^>]*>(.*?)</script\s*>",
@@ -39,7 +51,9 @@ def check_javascript_code(code):
                 "error_type": None,
                 "error_line": None,
                 "error_message": "No inline JavaScript was found.",
-                "suggestion": "HTML markup was not checked; no script blocks were available."
+                "suggestion": (
+                    "No script blocks were available for syntax checking."
+                )
             }
 
         code_to_check = "\n;\n".join(scripts)
@@ -73,18 +87,24 @@ def check_javascript_code(code):
                 "success": True,
                 "error_type": None,
                 "error_line": None,
-                "error_message": "No JavaScript syntax errors were found.",
+                "error_message": (
+                    "No JavaScript syntax errors were found."
+                ),
                 "suggestion": "JavaScript syntax is valid."
             }
 
         message = (result.stderr or result.stdout).strip()
 
+        # Extract the line number reported for the temporary JS file.
         match = re.search(
-            re.escape(temp_path) + r":(\d+)",
-            message
+            re.escape(temp_path) + r":(\d+)(?::\d+)?",
+            message,
+            flags=re.I
         )
+
         line = int(match.group(1)) if match else None
 
+        # Keep the original Node.js message for accurate diagnostics.
         return {
             "success": False,
             "error_type": "SyntaxError",
@@ -92,8 +112,8 @@ def check_javascript_code(code):
             "error_message": message,
             "suggestion": (
                 f"Check the JavaScript syntax near line {line}."
-                if line
-                else "Review the JavaScript syntax and Node.js error message."
+                if line is not None
+                else "Review the Node.js syntax error message."
             )
         }
 
@@ -112,7 +132,7 @@ def check_javascript_code(code):
             "error_type": "DebuggerError",
             "error_line": None,
             "error_message": str(error),
-            "suggestion": "Check the Node.js installation."
+            "suggestion": "Check the Node.js installation and debugger."
         }
 
     finally:
